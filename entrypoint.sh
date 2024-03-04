@@ -3,8 +3,6 @@
 set -x # verbose mode
 set -e # stop executing after error
 
-echo "Starting Jekyll build"
-
 ####################################################
 # Set workspace permissions
 ####################################################
@@ -12,9 +10,21 @@ echo "Starting Jekyll build"
 chmod -R a+w /github/workspace
 
 ####################################################
+# Change work directory
+####################################################
+
+if [ -n "$1" ]
+then
+    cd "/github/workspace/$1"
+else
+    cd "/github/workspace"
+fi
+
+####################################################
 # Build the Jekyll site
 ####################################################
 
+echo "Starting Jekyll build"
 jekyll build --trace
 
 ####################################################
